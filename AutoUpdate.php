@@ -1,5 +1,6 @@
 <?php
-if(!file_exists('Config.php')){
+
+if (!file_exists('Config.php')) {
     exit('Please configure this app first by copying the default config to Config.php');
 }
 include 'Config.php';
@@ -10,7 +11,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $requestBody = verifyGithub();
 
     //@todo check branch in payload
-    
     //
     if (!empty($requestBody)) {
         $cmds = [
@@ -20,26 +20,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             'git pull',
             'yes | cp -au ' . PATH_REPOSITORY . '* ' . PATH_PUBLIC
         ];
-        $x = shell_exec(implode(' 2>&1 && ', $cmds) .' 2>&1 ');
+        $x = shell_exec(implode(' 2>&1 && ', $cmds) . ' 2>&1 ');
     }
-}
-
+} else {
 
 //Page is called in browser
-if (function_exists('exec')) {
-    echo "exec is enabled";
-}
-if (function_exists('shell_exec')) {
-    echo "shell_exec is enabled";
-}
-if (!is_writable(PATH_REPOSITORY)) {
-    echo 'Repository path is not writeable';
-}
-if (!is_writable(PATH_REPOSITORY . '.git')) {
-    echo 'Repository path does not contain a git repository';
-}
-if (!is_writable(PATH_PUBLIC)) {
-    echo 'Public path is not writeable';
+    if (function_exists('exec')) {
+        echo "exec is enabled";
+    }
+    if (function_exists('shell_exec')) {
+        echo "shell_exec is enabled";
+    }
+    if (!is_writable(PATH_REPOSITORY)) {
+        echo 'Repository path is not writeable';
+    }
+    if (!is_writable(PATH_REPOSITORY . '.git')) {
+        echo 'Repository path does not contain a git repository';
+    }
+    if (!is_writable(PATH_PUBLIC)) {
+        echo 'Public path is not writeable';
+    }
 }
 
 function getPayload() {
