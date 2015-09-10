@@ -1,0 +1,4 @@
+<Files ~ "^\.git">
+    Order allow,deny
+    Deny from all
+</Files>

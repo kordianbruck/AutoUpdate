@@ -21,15 +21,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             'yes | cp -au ' . PATH_REPOSITORY . '* ' . PATH_PUBLIC
         ];
         $x = shell_exec(implode(' 2>&1 && ', $cmds) . ' 2>&1 ');
+        if (!empty($x)) {
+            echo 'Error encountered: ' . $x;
+        }
+    } else {
+        echo 'No Payload data';
     }
 } else {
-
-//Page is called in browser
-    if (function_exists('exec')) {
-        echo "exec is enabled";
+    //Page is called in browser
+    if (!function_exists('exec')) {
+        echo "exec is not enabled";
     }
-    if (function_exists('shell_exec')) {
-        echo "shell_exec is enabled";
+    if (!function_exists('shell_exec')) {
+        echo "shell_exec is not enabled";
     }
     if (!is_writable(PATH_REPOSITORY)) {
         echo 'Repository path is not writeable';
