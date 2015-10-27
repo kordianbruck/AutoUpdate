@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             'git checkout ' . GIT_BRANCH,
             'git reset --hard HEAD',
             'git pull',
-            'yes | cp -au ' . PATH_REPOSITORY . '* ' . PATH_PUBLIC
+            'rsync -rtu --delete ' . PATH_REPOSITORY . ' ' . PATH_PUBLIC
         ];
         $x = shell_exec(implode(' 2>&1 && ', $cmds) . ' 2>&1 ');
         if (!empty($x)) {
@@ -30,19 +30,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 } else {
     //Page is called in browser
     if (!function_exists('exec')) {
-        echo "exec is not enabled";
+        echo "exec is not enabled<br />";
     }
     if (!function_exists('shell_exec')) {
-        echo "shell_exec is not enabled";
+        echo "shell_exec is not enabled<br />";
     }
     if (!is_writable(PATH_REPOSITORY)) {
-        echo 'Repository path is not writeable';
+        echo "Repository path is not writeable<br />";
     }
     if (!is_writable(PATH_REPOSITORY . '.git')) {
-        echo 'Repository path does not contain a git repository';
+        echo "Repository path does not contain a git repository<br />";
     }
     if (!is_writable(PATH_PUBLIC)) {
-        echo 'Public path is not writeable';
+        echo "Public path is not writeable<br />";
+    }
+    if (!`which rsync`) {
+        echo "rsync is not installed or not accessable from PHP<br />";
     }
 }
 
