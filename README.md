@@ -1,4 +1,9 @@
-# AutoUpdate
+# AutoUpdate (DEPRECATED aka. no longer maintained)
+
+I haven't updated this code in a long time and chances are its broken. You problably should use some other sort of updating your production code (e.g. containers).
+
+---
+
 Automagically update web apps with a github hook.
 
 Ever felt, that you were updating your apps so often, that deployment to production was
